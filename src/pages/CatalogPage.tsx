@@ -37,13 +37,19 @@ export function CatalogPage() {
     <div>
       <section className="border-b border-line">
         <div className="mx-auto max-w-[1500px] px-5 pb-14 pt-16 sm:px-8 sm:pb-20 sm:pt-24 lg:px-12">
-          <p className="mb-8 text-[10px] uppercase tracking-[0.22em] text-muted">
+          <p className="rise mb-8 text-[10px] uppercase tracking-[0.22em] text-muted" style={{ animationDelay: '40ms' }}>
             Catálogo {total > 0 && `· ${total} produtos`}
           </p>
-          <h1 className="max-w-[14ch] font-display text-[clamp(3.2rem,11vw,8.5rem)] font-light leading-[0.9] tracking-[-0.045em]">
+          <h1
+            className="rise max-w-[14ch] font-display text-[clamp(3.2rem,11vw,8.5rem)] font-light leading-[0.9] tracking-[-0.045em]"
+            style={{ animationDelay: '140ms' }}
+          >
             Seleção de objetos
           </h1>
-          <p className="mt-8 max-w-sm text-[13px] leading-relaxed text-muted">
+          <p
+            className="rise mt-8 max-w-sm text-[13px] leading-relaxed text-muted"
+            style={{ animationDelay: '260ms' }}
+          >
             Uma curadoria de produtos variados. Busque pelo nome, filtre por categoria e abra os
             detalhes de cada peça.
           </p>
@@ -70,9 +76,18 @@ export function CatalogPage() {
 
           {!loading && !error && hasResults && (
             <>
-              <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 lg:grid-cols-4">
-                {data!.items.map((product) => (
-                  <ProductCard key={product.id} product={product} />
+              <div
+                key={`${search}-${category}-${page}`}
+                className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-3 lg:grid-cols-4"
+              >
+                {data!.items.map((product, index) => (
+                  <div
+                    key={product.id}
+                    className="card-enter"
+                    style={{ animationDelay: `${index * 45}ms` }}
+                  >
+                    <ProductCard product={product} />
+                  </div>
                 ))}
               </div>
 

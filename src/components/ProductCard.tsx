@@ -17,7 +17,7 @@ export function ProductCard({ product }: ProductCardProps) {
           src={product.thumbnail}
           alt={product.title}
           loading="lazy"
-          className="h-full w-full object-cover transition duration-[900ms] ease-out group-hover:scale-[1.04]"
+          className="img-reveal h-full w-full object-cover transition duration-[900ms] ease-out group-hover:scale-[1.04]"
         />
         {hasDiscount && (
           <span className="absolute left-0 top-0 bg-ink px-2 py-1 text-[9px] uppercase tracking-[0.16em] text-paper">
