@@ -3,6 +3,8 @@
 Catálogo de produtos em **React + Vite + TypeScript**, com busca, filtro por categoria,
 paginação e página de detalhe. Consome a API pública [DummyJSON](https://dummyjson.com).
 
+**Demo:** https://vitrine.viniciusribeiro.dev.br
+
 Projeto de portfólio focado em **React** e nas boas práticas de frontend: componentes
 reutilizáveis, camada de API tipada, estados de carregamento/vazio/erro, tema claro/escuro
 e testes.
@@ -57,6 +59,8 @@ descartar respostas antigas quando o usuário digita ou troca de filtro.
 - `src/components/ProductCard.test.tsx`: renderização de título, preço, desconto e link.
 
 ## Deploy
+
+Publicado em **https://vitrine.viniciusribeiro.dev.br**.
 
 O build gera arquivos estáticos em `dist/`. Como o app usa rotas do React Router, configure
 o servidor para servir `index.html` em rotas desconhecidas (SPA fallback). Exemplos:
