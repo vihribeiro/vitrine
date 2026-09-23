@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
 import { CategorySelect } from '../components/CategorySelect'
 import { Pagination } from '../components/Pagination'
 import { ProductCard } from '../components/ProductCard'
@@ -84,7 +84,7 @@ export function CatalogPage() {
                   <div
                     key={product.id}
                     className="card-enter"
-                    style={{ animationDelay: `${index * 45}ms` }}
+                    style={{ '--delay': `${index * 45}ms` } as CSSProperties}
                   >
                     <ProductCard product={product} />
                   </div>

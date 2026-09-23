@@ -46,12 +46,14 @@ export function ProductDetailPage() {
 
       <div className="mt-10 grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
         <div className="space-y-4">
-          <div className="aspect-[4/5] overflow-hidden bg-paper-2">
+          <div className="relative aspect-[4/5] overflow-hidden bg-paper-2">
             <img
+              key={activeImage}
               src={images[activeImage]}
               alt={product.title}
-              className="h-full w-full object-cover"
+              className="img-curtain h-full w-full object-cover"
             />
+            <span key={`curtain-${activeImage}`} className="curtain" aria-hidden="true" />
           </div>
           {images.length > 1 && (
             <div className="flex gap-3 overflow-x-auto">

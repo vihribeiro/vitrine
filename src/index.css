@@ -94,14 +94,21 @@ select {
   }
 }
 
-@keyframes imgIn {
+@keyframes curtainLift {
   from {
-    opacity: 0;
-    transform: scale(1.05);
+    transform: translateY(0);
   }
   to {
-    opacity: 1;
-    transform: none;
+    transform: translateY(-101%);
+  }
+}
+
+@keyframes imgUnderCurtain {
+  from {
+    transform: scale(1.06);
+  }
+  to {
+    transform: scale(1);
   }
 }
 
@@ -115,10 +122,21 @@ select {
 
 .card-enter {
   animation: riseIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--delay, 0ms);
 }
 
-.img-reveal {
-  animation: imgIn 1s cubic-bezier(0.22, 1, 0.36, 1) both;
+.curtain {
+  position: absolute;
+  inset: 0;
+  background: var(--paper-3);
+  pointer-events: none;
+  animation: curtainLift 1s cubic-bezier(0.76, 0, 0.24, 1) both;
+  animation-delay: calc(var(--delay, 0ms) + 120ms);
+}
+
+.img-curtain {
+  animation: imgUnderCurtain 1.3s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--delay, 0ms);
 }
 
 /* ============ Cursor customizado ============ */
@@ -189,8 +207,11 @@ select {
   .page-enter,
   .rise,
   .card-enter,
-  .img-reveal {
+  .img-curtain {
     animation: none;
+  }
+  .curtain {
+    display: none;
   }
   .cursor-layer {
     display: none;
