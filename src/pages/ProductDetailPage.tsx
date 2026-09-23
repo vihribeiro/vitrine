@@ -16,31 +16,41 @@ export function ProductDetailPage() {
   }, [id])
 
   if (loading) return <Spinner label="Carregando produto" />
-  if (error) return <ErrorState message={error} onRetry={reload} />
+  if (error) {
+    return (
+      <div className="mx-auto max-w-[1500px] px-5 py-16 sm:px-8 lg:px-12">
+        <ErrorState message={error} onRetry={reload} />
+      </div>
+    )
+  }
   if (!product) return null
 
   const images = product.images.length > 0 ? product.images : [product.thumbnail]
   const discountedPrice = product.price * (1 - product.discountPercentage / 100)
 
+  const specs: Array<[string, string]> = [
+    ['Garantia', product.warrantyInformation],
+    ['Envio', product.shippingInformation],
+    ['Devolução', product.returnPolicy],
+    ['SKU', product.sku],
+  ]
+
   return (
-    <div className="space-y-8">
+    <div className="mx-auto max-w-[1500px] px-5 py-10 sm:px-8 lg:px-12">
       <Link
         to="/"
-        className="inline-flex items-center gap-1.5 text-sm font-medium text-slate-500 transition hover:text-indigo-600 dark:text-slate-400 dark:hover:text-indigo-400"
+        className="inline-block text-[10px] uppercase tracking-[0.18em] text-muted transition-colors hover:text-ink"
       >
-        <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="m15 18-6-6 6-6" />
-        </svg>
-        Voltar ao catálogo
+        ← Voltar ao catálogo
       </Link>
 
-      <div className="grid gap-8 lg:grid-cols-2">
-        <div className="space-y-3">
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
+      <div className="mt-10 grid gap-12 lg:grid-cols-[1.1fr_1fr] lg:gap-16">
+        <div className="space-y-4">
+          <div className="aspect-[4/5] overflow-hidden bg-paper-2">
             <img
               src={images[activeImage]}
               alt={product.title}
-              className="aspect-square w-full object-cover"
+              className="h-full w-full object-cover"
             />
           </div>
           {images.length > 1 && (
@@ -50,12 +60,10 @@ export function ProductDetailPage() {
                   key={image}
                   type="button"
                   onClick={() => setActiveImage(index)}
-                  className={`h-16 w-16 flex-shrink-0 overflow-hidden rounded-xl border transition ${
-                    index === activeImage
-                      ? 'border-indigo-600 ring-2 ring-indigo-500/30'
-                      : 'border-slate-200 hover:border-slate-400 dark:border-slate-700'
-                  }`}
                   aria-label={`Ver imagem ${index + 1}`}
+                  className={`h-16 w-16 shrink-0 overflow-hidden border transition-colors ${
+                    index === activeImage ? 'border-ink' : 'border-line hover:border-muted'
+                  }`}
                 >
                   <img src={image} alt="" className="h-full w-full object-cover" />
                 </button>
@@ -64,76 +72,63 @@ export function ProductDetailPage() {
           )}
         </div>
 
-        <div className="space-y-5">
-          <div className="space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-400">
-              {product.category}
-            </span>
-            <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl dark:text-white">
-              {product.title}
-            </h1>
-            {product.brand && (
-              <p className="text-sm text-slate-500 dark:text-slate-400">Marca: {product.brand}</p>
-            )}
+        <div className="lg:pt-4">
+          <p className="text-[10px] uppercase tracking-[0.22em] text-muted">{product.category}</p>
+          <h1 className="mt-4 font-display text-[clamp(2.4rem,5vw,4rem)] font-light leading-[0.95] tracking-[-0.04em]">
+            {product.title}
+          </h1>
+
+          <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2">
             <Rating value={product.rating} />
+            {product.brand && (
+              <span className="text-[10px] uppercase tracking-[0.18em] text-muted">
+                Marca · {product.brand}
+              </span>
+            )}
           </div>
 
-          <div className="flex flex-wrap items-baseline gap-3">
-            <span className="text-3xl font-extrabold text-slate-900 dark:text-white">
+          <div className="mt-8 flex flex-wrap items-baseline gap-4 border-t border-line pt-6">
+            <span className="font-display text-3xl font-light tracking-[-0.02em] tabular-nums">
               {formatCurrency(product.price)}
             </span>
             {product.discountPercentage > 0 && (
               <>
-                <span className="text-sm text-slate-400 line-through">
+                <span className="text-[12px] text-muted line-through tabular-nums">
                   {formatCurrency(discountedPrice)}
                 </span>
-                <span className="rounded-full bg-rose-100 px-2 py-0.5 text-xs font-semibold text-rose-600 dark:bg-rose-950/60 dark:text-rose-400">
+                <span className="bg-accent px-2 py-0.5 text-[9px] uppercase tracking-[0.16em] text-white">
                   -{Math.round(product.discountPercentage)}%
                 </span>
               </>
             )}
           </div>
 
-          <p className="text-slate-600 dark:text-slate-300">{product.description}</p>
+          <p className="mt-6 max-w-prose text-[13px] leading-relaxed text-muted">
+            {product.description}
+          </p>
 
-          <div className="flex items-center gap-3 text-sm">
-            <span
-              className={`rounded-full px-3 py-1 font-medium ${
-                product.stock > 0
-                  ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-400'
-                  : 'bg-rose-100 text-rose-700 dark:bg-rose-950/60 dark:text-rose-400'
-              }`}
-            >
+          <div className="mt-6 flex items-center gap-4 text-[10px] uppercase tracking-[0.16em]">
+            <span className={product.stock > 0 ? 'text-ink' : 'text-muted'}>
               {product.stock > 0 ? `${product.stock} em estoque` : 'Sem estoque'}
             </span>
-            <span className="text-slate-500 dark:text-slate-400">{product.availabilityStatus}</span>
+            <span className="text-muted">{product.availabilityStatus}</span>
           </div>
 
-          <dl className="grid grid-cols-2 gap-3 rounded-2xl border border-slate-200 p-4 text-sm dark:border-slate-800">
-            <div>
-              <dt className="text-slate-500 dark:text-slate-400">Garantia</dt>
-              <dd className="font-medium text-slate-800 dark:text-slate-100">{product.warrantyInformation}</dd>
-            </div>
-            <div>
-              <dt className="text-slate-500 dark:text-slate-400">Envio</dt>
-              <dd className="font-medium text-slate-800 dark:text-slate-100">{product.shippingInformation}</dd>
-            </div>
-            <div>
-              <dt className="text-slate-500 dark:text-slate-400">Devolução</dt>
-              <dd className="font-medium text-slate-800 dark:text-slate-100">{product.returnPolicy}</dd>
-            </div>
-            <div>
-              <dt className="text-slate-500 dark:text-slate-400">SKU</dt>
-              <dd className="font-medium text-slate-800 dark:text-slate-100">{product.sku}</dd>
-            </div>
+          <dl className="mt-8 border-t border-line">
+            {specs.map(([label, value]) => (
+              <div key={label} className="flex items-center justify-between border-b border-line py-3">
+                <dt className="text-[10px] uppercase tracking-[0.18em] text-muted">{label}</dt>
+                <dd className="text-[12px]">{value}</dd>
+              </div>
+            ))}
           </dl>
 
           {product.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2">
+            <div className="mt-6 flex flex-wrap gap-2">
               {product.tags.map((tag) => (
                 <span
                   key={tag}
-                  className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-600 dark:bg-slate-800 dark:text-slate-300"
+                  className="border border-line px-3 py-1 text-[10px] uppercase tracking-[0.14em] text-muted"
                 >
                   {tag}
                 </span>
@@ -144,21 +139,16 @@ export function ProductDetailPage() {
       </div>
 
       {product.reviews.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="text-xl font-bold text-slate-900 dark:text-white">Avaliações</h2>
-          <div className="grid gap-4 sm:grid-cols-2">
+        <section className="mt-20 border-t border-line pt-10">
+          <h2 className="text-[10px] uppercase tracking-[0.22em] text-muted">Avaliações</h2>
+          <div className="mt-8 grid gap-x-10 gap-y-8 sm:grid-cols-2">
             {product.reviews.map((review, index) => (
-              <article
-                key={`${review.reviewerName}-${index}`}
-                className="rounded-2xl border border-slate-200 bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
-              >
-                <div className="mb-1 flex items-center justify-between">
-                  <strong className="text-sm text-slate-800 dark:text-slate-100">
-                    {review.reviewerName}
-                  </strong>
+              <article key={`${review.reviewerName}-${index}`} className="border-t border-line pt-4">
+                <div className="flex items-center justify-between gap-4">
+                  <strong className="text-[12px] font-medium">{review.reviewerName}</strong>
                   <Rating value={review.rating} />
                 </div>
-                <p className="text-sm text-slate-600 dark:text-slate-300">{review.comment}</p>
+                <p className="mt-2 text-[13px] text-muted">{review.comment}</p>
               </article>
             ))}
           </div>

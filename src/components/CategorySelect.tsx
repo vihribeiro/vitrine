@@ -8,18 +8,31 @@ interface CategorySelectProps {
 
 export function CategorySelect({ categories, value, onChange }: CategorySelectProps) {
   return (
-    <select
-      value={value}
-      onChange={(event) => onChange(event.target.value)}
-      aria-label="Filtrar por categoria"
-      className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-medium text-slate-700 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
-    >
-      <option value="">Todas as categorias</option>
-      {categories.map((category) => (
-        <option key={category.slug} value={category.slug}>
-          {category.name}
-        </option>
-      ))}
-    </select>
+    <label className="relative flex items-center gap-3 border-b border-line pb-2 transition-colors focus-within:border-ink">
+      <select
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        aria-label="Filtrar por categoria"
+        className="cursor-pointer bg-transparent pr-5 text-[11px] uppercase tracking-[0.16em] outline-none"
+      >
+        <option value="">Todas as categorias</option>
+        {categories.map((category) => (
+          <option key={category.slug} value={category.slug}>
+            {category.name}
+          </option>
+        ))}
+      </select>
+      <svg
+        viewBox="0 0 24 24"
+        className="pointer-events-none absolute right-0 h-3.5 w-3.5 text-muted"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="m6 9 6 6 6-6" />
+      </svg>
+    </label>
   )
 }

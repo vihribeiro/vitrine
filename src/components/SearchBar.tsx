@@ -5,26 +5,26 @@ interface SearchBarProps {
 
 export function SearchBar({ value, onChange }: SearchBarProps) {
   return (
-    <div className="relative flex-1">
+    <label className="flex w-full items-center gap-3 border-b border-line pb-2 transition-colors focus-within:border-ink sm:max-w-xs">
       <svg
         viewBox="0 0 24 24"
-        className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"
+        className="h-4 w-4 shrink-0 text-muted"
         fill="none"
         stroke="currentColor"
-        strokeWidth="2"
+        strokeWidth="1.5"
         strokeLinecap="round"
       >
-        <circle cx="11" cy="11" r="8" />
-        <path d="m21 21-4.3-4.3" />
+        <circle cx="11" cy="11" r="7" />
+        <path d="m20 20-3.5-3.5" />
       </svg>
       <input
         type="search"
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        placeholder="Buscar produtos..."
+        placeholder="Buscar produtos"
         aria-label="Buscar produtos"
-        className="w-full rounded-xl border border-slate-200 bg-white py-2.5 pl-10 pr-4 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+        className="w-full bg-transparent text-[13px] tracking-[-0.01em] outline-none"
       />
-    </div>
+    </label>
   )
 }

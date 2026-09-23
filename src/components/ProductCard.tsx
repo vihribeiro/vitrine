@@ -11,41 +11,36 @@ export function ProductCard({ product }: ProductCardProps) {
   const hasDiscount = product.discountPercentage > 0
 
   return (
-    <Link
-      to={`/produto/${product.id}`}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white transition hover:-translate-y-1 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900"
-    >
-      <div className="relative aspect-square overflow-hidden bg-slate-100 dark:bg-slate-800">
+    <Link to={`/produto/${product.id}`} className="group block">
+      <div className="relative aspect-[4/5] overflow-hidden bg-paper-2">
         <img
           src={product.thumbnail}
           alt={product.title}
           loading="lazy"
-          className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+          className="h-full w-full object-cover transition duration-[900ms] ease-out group-hover:scale-[1.04]"
         />
         {hasDiscount && (
-          <span className="absolute left-3 top-3 rounded-full bg-rose-500 px-2.5 py-1 text-xs font-semibold text-white">
+          <span className="absolute left-0 top-0 bg-ink px-2 py-1 text-[9px] uppercase tracking-[0.16em] text-paper">
             -{Math.round(product.discountPercentage)}%
           </span>
         )}
       </div>
 
-      <div className="flex flex-1 flex-col gap-2 p-4">
-        <span className="text-xs font-semibold uppercase tracking-wide text-indigo-600 dark:text-indigo-400">
-          {product.category}
-        </span>
-        <h3 className="line-clamp-2 font-semibold text-slate-900 dark:text-white">{product.title}</h3>
-        <Rating value={product.rating} />
+      <div className="mt-3 flex items-start justify-between gap-4">
+        <div className="min-w-0">
+          <p className="text-[9px] uppercase tracking-[0.18em] text-muted">{product.category}</p>
+          <h3 className="mt-0.5 truncate font-display text-[15px] font-normal leading-snug text-ink">
+            {product.title}
+          </h3>
+          <div className="mt-1.5">
+            <Rating value={product.rating} />
+          </div>
+        </div>
 
-        <div className="mt-auto flex items-center justify-between pt-1">
-          <span className="text-lg font-bold text-slate-900 dark:text-white">
-            {formatCurrency(product.price)}
-          </span>
-          {product.stock > 0 ? (
-            <span className="text-xs font-medium text-emerald-600 dark:text-emerald-400">
-              {product.stock} em estoque
-            </span>
-          ) : (
-            <span className="text-xs font-medium text-rose-600 dark:text-rose-400">Sem estoque</span>
+        <div className="shrink-0 text-right">
+          <p className="text-[13px] font-medium tabular-nums">{formatCurrency(product.price)}</p>
+          {product.stock === 0 && (
+            <p className="mt-0.5 text-[9px] uppercase tracking-[0.16em] text-muted">esgotado</p>
           )}
         </div>
       </div>

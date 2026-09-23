@@ -1,17 +1,15 @@
 export function Footer() {
   return (
-    <footer className="border-t border-slate-200 dark:border-slate-800">
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-2 px-4 py-6 text-sm text-slate-500 sm:flex-row sm:px-6 dark:text-slate-400">
-        <span>
-          Vitrine · catálogo de exemplo consumindo a API pública DummyJSON
-        </span>
+    <footer className="border-t border-line">
+      <div className="mx-auto flex max-w-[1500px] flex-col gap-2 px-5 py-8 text-[10px] uppercase tracking-[0.16em] text-muted sm:flex-row sm:items-center sm:justify-between sm:px-8 lg:px-12">
+        <span>Vitrine — catálogo via API DummyJSON</span>
         <span>
           por{' '}
           <a
             href="https://viniciusribeiro.dev.br"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-medium text-indigo-600 hover:underline dark:text-indigo-400"
+            className="text-ink underline-offset-4 hover:underline"
           >
             Vinicius Ribeiro
           </a>
